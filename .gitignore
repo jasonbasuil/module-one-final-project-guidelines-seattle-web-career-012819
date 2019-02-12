@@ -1,6 +1,8 @@
 .DS_Store
 .idea
 
+*.sqlite
+
 log
 node_modules
 out
@@ -12,3 +14,5 @@ tmp
 
 db/*.db
 db/schema.rb
+
+Gemfile.lock
