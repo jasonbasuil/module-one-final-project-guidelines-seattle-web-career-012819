@@ -1,5 +1,6 @@
 require_relative '../config/environment'
+require_relative '../bin/CLI.rb'
 
 
-
-puts "HELLO WORLD"
+cli = CLI.new
+cli.main_menu()
