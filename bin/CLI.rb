@@ -210,20 +210,29 @@ class CLI
         puts ""
         main_menu()
       else
-        puts "Would you like to remove any favorited animals? Please enter y or n:"
-        response = gets.chomp.downcase
-        if response == "y"
+      puts "Please choose from the following choices: "
+      puts "Choose 1 to remove an animal from your list."
+      puts "Choose 2 to view an image of the favorite"
+      puts "Choose 0 to return to the MENU"
+      response = gets.chomp.downcase
+        if response == "1"
           puts "Which favorite number would you like to remove?"
           input = gets.chomp.to_i
           found = UserFave.find_by(:fave_animal_id => fav_animals[input - 1]["id"])
           UserFave.delete(found["id"])
           puts "Successfully removed #{found["species"]} from your favorites!"
           main_menu
-        else response == "n"
-          main_menu()
-        end
-      end
+        elsif response == "2"
+          puts "Please enter the favorite number for the image you would like to see. This will open in a new window."
+          input = gets.chomp.to_i
+          # binding.pry
+          Launchy.open(fav_animals[input -1]["image"])
+          view_favorites()
+    else response == "n"
+    main_menu()
     end
+  end
+end 
 
     def update_user_account
       puts "Updating your user account information."
