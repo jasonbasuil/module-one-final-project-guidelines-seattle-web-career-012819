@@ -18,8 +18,14 @@ class CLI
         name = gets.chomp.downcase
         puts "Enter your email:"
         email = gets.chomp.downcase
-        user = User.create(name: name, email: email)
-        puts "Thanks #{name.capitalize}."
+        found = User.find_by(email: email)
+        if found != nil
+          puts "Oops! Looks like there's already an account with that email."
+          return find_by_user()
+        else
+          user = User.create(name: name, email: email)
+          puts "Thanks #{name.capitalize}."
+        end
       elsif answer == "y"
         return find_by_user()
       else
@@ -215,19 +221,33 @@ class CLI
     def update_user_account
       puts "Updating your user account information."
       puts "Please select an option below."
-      puts "1. Update NAME"
+      puts "1. Update NAME and EMAIL"
       puts "0. Return to MENU"
       input = gets.chomp.to_i
       if input == 0
         main_menu()
       elsif input == 1
         puts "What is your current email?"
+        puts ""
         got_email = gets.chomp.downcase
         found = User.find_by(email: got_email)
-        puts "What would you like to update your name to?"
-        new_name = gets.chomp.downcase
-        found.update(name: new_name)
-        puts "Great! We updated your user account."
+        if found == nil
+          puts "Sorry, you must've had a typo! Please try again."
+          update_user_account()
+        else
+          puts ""
+          puts "What would you like to update your name to?"
+          new_name = gets.chomp.downcase
+          puts "What would you like to update your email to?"
+          new_email = gets.chomp.downcase
+          found.update(name: new_name, email: new_email)
+          30.times do
+            puts ""
+          end
+          puts "Great! We updated your user account."
+          puts ""
+          main_menu()
+        end
       end
     end
 end
