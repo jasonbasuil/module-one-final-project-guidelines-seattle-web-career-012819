@@ -18,9 +18,7 @@ class CLI
         name = gets.chomp.downcase
         puts "Enter your email:"
         email = gets.chomp.downcase
-        #binding.pry
         user = User.create(name: name, email: email)
-        # binding.pry
         puts "Thanks #{name.capitalize}."
       elsif answer == "y"
         return find_by_user()
@@ -54,18 +52,20 @@ class CLI
         puts ""
         puts "1. Browse pets by species(dog or cat)"
         puts "2. Browse pets by status (Adoptable, lost, found)"
-        puts "3. View your favorite pets!"
+        puts "3. View your favorite pets"
         puts "4. Update your user account"
         puts "0. exit"
         answer = gets.chomp.downcase
         puts ""
 
         if answer == "1"
-          browse_pets_by_species
+          browse_pets_by_species()
         elsif answer == "2"
-          browse_pets_by_status
+          browse_pets_by_status()
         elsif answer == "3"
-          view_favorites
+          view_favorites()
+        elsif answer == "4"
+          update_user_account()
         elsif answer == "0"
           puts "Thanks for visiting King County Pet Finder!"
           exit
@@ -209,6 +209,25 @@ class CLI
         else response == "n"
           main_menu()
         end
+      end
+    end
+
+    def update_user_account
+      puts "Updating your user account information."
+      puts "Please select an option below."
+      puts "1. Update NAME"
+      puts "0. Return to MENU"
+      input = gets.chomp.to_i
+      if input == 0
+        main_menu()
+      elsif input == 1
+        puts "What is your current email?"
+        got_email = gets.chomp.downcase
+        found = User.find_by(email: got_email)
+        puts "What would you like to update your name to?"
+        new_name = gets.chomp.downcase
+        found.update(name: new_name)
+        puts "Great! We updated your user account."
       end
     end
 end
