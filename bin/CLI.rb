@@ -3,10 +3,11 @@ class CLI
 
     def initialize
       puts ""
-      puts "Welcome to the King County Pet Finder"
+      puts "WELCOME TO THE KING COUNTY PET FINDER"
       puts ""
-      puts " U ´ᴥ` U   ໒( ̿❍ ᴥ ̿❍)ʋ  υ´• ﻌ •`υ"
+      puts " U ´ᴥ` U   ໒( ̿❍ ᴥ ̿❍)ʋ   υ´• ﻌ •`υ "
       puts ""
+      puts " [^._.^]ﾉ彡  =＾● ㉨ ●＾=   =＾● ⋏ ●＾= "
       puts ""
     end
 
@@ -20,7 +21,7 @@ class CLI
         email = gets.chomp.downcase
         found = User.find_by(email: email)
         if found != nil
-          puts "Oops! Looks like there's already an account with that email."
+          puts "Oops! Looks like there's already an account with that email.".red
           return find_by_user()
         else
           user = User.create(name: name, email: email)
@@ -29,18 +30,19 @@ class CLI
       elsif answer == "y"
         return find_by_user()
       else
-        puts "Whoa! That's not y OR n! Please choose y or n!"
+        puts "Whoa! That's not y OR n! Please choose y or n!".red
         create_user()
       end
       @user_id = user.id
     end
 
     def find_by_user
+      puts ""
       puts "What's your email?"
       user_email = gets.chomp.downcase
       user = User.find_by(email: user_email)
       if user.nil?
-        puts "Sorry, we couldn't find an account associated to that email address.  Please create a new account or try again."
+        puts "Sorry, we couldn't find an account associated to that email address.  Please create a new account or try again.".red
         puts ""
         create_user()
       else
@@ -56,8 +58,8 @@ class CLI
         puts ""
         puts "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
         puts ""
-        puts "1. Browse pets by species(dog or cat)"
-        puts "2. Browse pets by status (Adoptable, lost, found)"
+        puts "1. Browse pets by species(DOG or CAT)"
+        puts "2. Browse pets by status (ADOPTABLE, LOST, FOUND)"
         puts "3. View your favorite pets"
         puts "4. Update your user account"
         puts "0. exit"
@@ -73,10 +75,13 @@ class CLI
         elsif answer == "4"
           update_user_account()
         elsif answer == "0"
-          puts "Thanks for visiting King County Pet Finder!"
+          puts "THANKS FOR VISITING KING COUNTY PET FINDER"
+          puts ""
+          puts "Meow meow. Bark bark."
           exit
         else
-          puts "Please choose from the given options."
+          puts "OOPS! Please choose from the given options.".red
+          puts ""
           return self.main_menu
         end
       end
@@ -94,8 +99,10 @@ class CLI
         elsif species_choice == '0'
             main_menu()
         else
-            puts "Please enter a valid option of 1 or 2."
-            self.browse_pets_species()
+            puts ""
+            puts "OOPS! Please enter a valid option of 1 or 2.".red
+            puts ""
+            browse_pets_by_species()
         end
       end
 
@@ -115,7 +122,7 @@ class CLI
         elsif status_choice == '0'
             main_menu()
         else
-            puts "Please enter a valid option of 1, 2, 3, or 0."
+            puts "Please enter a valid option of 1, 2, 3, or 0.".red
             puts ""
             self.browse_pets_by_status()
         end
@@ -198,7 +205,7 @@ class CLI
         count += 1
       end
       if fav_animals.empty?
-        puts "Nothing to view here! Please add favorites to your list!"
+        puts "Nothing to view here! Please add favorites to your list!".red
         puts ""
         puts ""
         main_menu()
