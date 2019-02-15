@@ -298,27 +298,6 @@ end
             puts "Great! We updated your USER ACCOUNT.".green
             puts ""
             main_menu()
-
-
-
-        # puts "What is your current EMAIL?"
-        # puts ""
-        # got_email = gets.chomp.downcase
-        # found = User.find_by(email: got_email)
-        # if found == nil
-        #   puts "Sorry, you must've had a typo! Please try again.".red
-        #   update_user_account()
-        # else
-        #   puts ""
-        #   puts "What would you like to update your NAME to?"
-        #   new_name = gets.chomp.downcase
-        #   puts "What would you like to update your EMAIL to?"
-        #   new_email = gets.chomp.downcase
-        #   found.update(name: new_name, email: new_email)
-        #   system("clear")
-        #   puts "Great! We updated your USER ACCOUNT.".green
-        #   puts ""
-        #   main_menu()
         end
       end
     end
