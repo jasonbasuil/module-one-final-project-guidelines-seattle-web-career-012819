@@ -5,9 +5,9 @@ class CLI
       puts ""
       puts "WELCOME TO THE KING COUNTY PET FINDER"
       puts ""
-      puts " U ´ᴥ` U   ໒( ̿❍ ᴥ ̿❍)ʋ   υ´• ﻌ •`υ "
+      puts " U ´ᴥ` U  BARK  ໒( ̿❍ ᴥ ̿❍)ʋ  BARK  υ´• ﻌ •`υ "
       puts ""
-      puts " [^._.^]ﾉ彡  =＾● ㉨ ●＾=   =＾● ⋏ ●＾= "
+      puts " [^._.^]ﾉ彡 MEOW =＾● ㉨ ●＾= MEOW  =＾● ⋏ ●＾= "
       puts ""
     end
 
@@ -24,8 +24,10 @@ class CLI
           puts "Oops! Looks like there's already an account with that email.".red
           return find_by_user()
         else
+          system("clear")
           user = User.create(name: name, email: email)
-          puts "Thanks #{name.capitalize}."
+          puts "Thanks #{name.capitalize}.".green
+          puts ""
         end
       elsif answer == "y"
         return find_by_user()
@@ -46,7 +48,7 @@ class CLI
         puts ""
         create_user()
       else
-        puts ""
+        system("clear")
         puts "Thanks #{user.name.capitalize}."
         puts ""
         @user_id = user.id
@@ -58,11 +60,11 @@ class CLI
         puts ""
         puts "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
         puts ""
-        puts "1. Browse pets by species(DOG or CAT)"
-        puts "2. Browse pets by status (ADOPTABLE, LOST, FOUND)"
-        puts "3. View your favorite pets"
-        puts "4. Update your user account"
-        puts "0. exit"
+        puts "1. BROWSE pets by species(DOG or CAT)"
+        puts "2. BROWSE pets by status (ADOPTABLE, LOST, FOUND)"
+        puts "3. VIEW your favorite pets"
+        puts "4. UPDATE your user account"
+        puts "0. EXIT"
         answer = gets.chomp.downcase
         puts ""
 
@@ -73,11 +75,18 @@ class CLI
         elsif answer == "3"
           view_favorites()
         elsif answer == "4"
+          system("clear")
           update_user_account()
         elsif answer == "0"
-          puts "THANKS FOR VISITING KING COUNTY PET FINDER"
+          puts "THANKS FOR VISITING KING COUNTY PET FINDER".green
           puts ""
           puts "Meow meow. Bark bark."
+          puts ""
+          puts " U ´ᴥ` U  BARK  ໒( ̿❍ ᴥ ̿❍)ʋ  BARK  υ´• ﻌ •`υ "
+          puts ""
+          puts " [^._.^]ﾉ彡 MEOW =＾● ㉨ ●＾= MEOW  =＾● ⋏ ●＾= "
+          puts ""
+          puts ""
           exit
         else
           puts "OOPS! Please choose from the given options.".red
@@ -97,6 +106,7 @@ class CLI
         elsif species_choice == '2'
             view_animal("animal_type", "Dog")
         elsif species_choice == '0'
+            system("clear")
             main_menu()
         else
             puts ""
@@ -120,6 +130,7 @@ class CLI
         elsif status_choice == '3'
             view_animal("record_type", "ADOPTABLE")
         elsif status_choice == '0'
+            system("clear")
             main_menu()
         else
             puts "Please enter a valid option of 1, 2, 3, or 0.".red
@@ -153,22 +164,24 @@ class CLI
       animals
       puts "Select the number you would like to favorite or press 0000 to go back to the MENU."
       input = gets.chomp.to_i
+      system("clear")
       if input == 0000
+        system("clear")
         main_menu()
       elsif FaveAnimal.exists?(:animal_key => animals[input -1]["animal_id"]) == false
         favorite = FaveAnimal.create(animal_key: animals[input -1]["animal_id"], name: animals[input - 1]["animal_name"], species: animals[input - 1]["animal_type"], breed: animals[input - 1]["animal_breed"], age: animals[input - 1]["age"], image: animals[input - 1]["image"], website: animals[input - 1]["link"], status: animals[input - 1]["record_type"])
         @fave_animal_id = favorite.id
         UserFave.create(user_id: @user_id, fave_animal_id: @fave_animal_id)
-        puts ""
-        puts "Favorite successfully added!"
+        system("clear")
+        puts "Favorite successfully added!".green
         puts ""
         main_menu()
       else
         found = FaveAnimal.find_by(:animal_key => animals[input -1]["animal_id"])
         @fave_animal_id = found.id
         UserFave.create(user_id: @user_id, fave_animal_id: @fave_animal_id)
-        puts ""
-        puts "Favorite successfully added!"
+        system("clear")
+        puts "Favorite successfully added!".green
         puts ""
         main_menu()
       end
@@ -205,34 +218,39 @@ class CLI
         count += 1
       end
       if fav_animals.empty?
+        system("clear")
         puts "Nothing to view here! Please add favorites to your list!".red
         puts ""
         puts ""
         main_menu()
       else
       puts "Please choose from the following choices: "
-      puts "Choose 1 to remove an animal from your list."
-      puts "Choose 2 to view an image of the favorite"
-      puts "Choose 0 to return to the MENU"
+      puts "Type 1 to remove a favorited animal from your list."
+      puts "Type 2 to view an image of your favorite animal."
+      puts "Type 0 to return to the MENU."
       response = gets.chomp.downcase
         if response == "1"
-          puts "Which favorite number would you like to remove?"
+          puts ""
+          puts "Which FAVORITE NUMBER would you like to remove?"
           input = gets.chomp.to_i
           found = UserFave.find_by(:fave_animal_id => fav_animals[input - 1]["id"])
           UserFave.delete(found["id"])
-          puts "Successfully removed #{found["species"]} from your favorites!"
-          main_menu
-        elsif response == "2"
-          puts "Please enter the favorite number for the image you would like to see. This will open in a new window."
-          input = gets.chomp.to_i
-          # binding.pry
-          Launchy.open(fav_animals[input -1]["image"])
+          system("clear")
+          puts "Successfully removed #{found["species"]} from your favorites!".green
           view_favorites()
-    else response == "n"
-    main_menu()
+        elsif response == "2"
+          puts ""
+          puts "Please enter the FAVORITE NUMBER for the image you would like to see. This will open in a new window."
+          input = gets.chomp.to_i
+          Launchy.open(fav_animals[input -1]["image"])
+          system("clear")
+          view_favorites()
+    else response == "0"
+      system("clear")
+      main_menu()
     end
   end
-end 
+end
 
     def update_user_account
       puts "Updating your user account information."
@@ -241,26 +259,25 @@ end
       puts "0. Return to MENU"
       input = gets.chomp.to_i
       if input == 0
+        system("clear")
         main_menu()
       elsif input == 1
-        puts "What is your current email?"
+        puts "What is your current EMAIL?"
         puts ""
         got_email = gets.chomp.downcase
         found = User.find_by(email: got_email)
         if found == nil
-          puts "Sorry, you must've had a typo! Please try again."
+          puts "Sorry, you must've had a typo! Please try again.".red
           update_user_account()
         else
           puts ""
-          puts "What would you like to update your name to?"
+          puts "What would you like to update your NAME to?"
           new_name = gets.chomp.downcase
-          puts "What would you like to update your email to?"
+          puts "What would you like to update your EMAIL to?"
           new_email = gets.chomp.downcase
           found.update(name: new_name, email: new_email)
-          30.times do
-            puts ""
-          end
-          puts "Great! We updated your user account."
+          system("clear")
+          puts "Great! We updated your USER ACCOUNT.".green
           puts ""
           main_menu()
         end
