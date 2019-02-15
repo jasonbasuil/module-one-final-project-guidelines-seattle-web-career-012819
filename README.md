@@ -19,3 +19,7 @@ gem 'launchy', '~> 2.4', '>= 2.4.3'
 
 Prior to running be sure to bundle install! 
 In the terminal rake run and you're off! 
+
+# Video Demo 
+
+https://youtu.be/pzoFufgAKM0
