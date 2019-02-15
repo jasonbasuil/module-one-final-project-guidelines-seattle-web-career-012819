@@ -255,33 +255,50 @@ end
     def update_user_account
       puts "Updating your user account information."
       puts "Please select an option below."
-      puts "1. Update NAME and EMAIL"
+      puts "1. VIEW account information"
+      puts "2. Update NAME and EMAIL"
       puts "0. Return to MENU"
       input = gets.chomp.to_i
+
       if input == 0
         system("clear")
         main_menu()
+
       elsif input == 1
         puts "What is your current EMAIL?"
         puts ""
         got_email = gets.chomp.downcase
+        user = User.find_by(email: got_email)
+        puts "Name: #{user.name}" 
+        puts "Email: #{user.email}"
+        # binding.pry
+        main_menu
+
+      else input == 2
+        puts "What is your current EMAIL?"
+        puts ""
+        got_email = gets.chomp.downcase
         found = User.find_by(email: got_email)
-        if found == nil
-          puts "Sorry, you must've had a typo! Please try again.".red
-          update_user_account()
-        else
-          puts ""
-          puts "What would you like to update your NAME to?"
-          new_name = gets.chomp.downcase
-          puts "What would you like to update your EMAIL to?"
-          new_email = gets.chomp.downcase
-          found.update(name: new_name, email: new_email)
-          system("clear")
-          puts "Great! We updated your USER ACCOUNT.".green
-          puts ""
-          main_menu()
+          if found == nil
+            puts "Sorry, you must've had a typo! Please try again.".red
+            update_user_account()
+          else
+            puts ""
+            puts "What would you like to update your NAME to?"
+            new_name = gets.chomp.downcase
+            puts "What would you like to update your EMAIL to?"
+            new_email = gets.chomp.downcase
+            found.update(name: new_name, email: new_email)
+            system("clear")
+            puts "Great! We updated your USER ACCOUNT.".green
+            puts ""
+            main_menu()
+        
         end
       end
     end
+
+
+
 end
 # End CLI class
