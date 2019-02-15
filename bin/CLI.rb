@@ -260,9 +260,11 @@ end
       puts "2. Update NAME and EMAIL"
       puts "0. Return to MENU"
       input = gets.chomp.to_i
+
       if input == 0
         system("clear")
         main_menu()
+
       elsif input == 1
         puts "What is your current EMAIL?"
         puts ""
@@ -301,5 +303,8 @@ end
         end
       end
     end
+
+
+
 end
 # End CLI class
