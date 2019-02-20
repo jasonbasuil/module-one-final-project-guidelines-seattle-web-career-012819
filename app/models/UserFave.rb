@@ -1,4 +1,4 @@
-class UserFave < ActiveRecord::Base
+class UserFavorite < ActiveRecord::Base
   belongs_to :user
-  belongs_to :fave_animal 
+  belongs_to :favorite_animal
 end

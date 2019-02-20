@@ -1,6 +1,6 @@
-class CreateFaveAnimals < ActiveRecord::Migration[5.0]
+class CreateFavoriteAnimals < ActiveRecord::Migration[5.0]
   def change
-    create_table :fave_animals do |t|
+    create_table :favorite_animals do |t|
       t.string :animal_key
       t.string :status
       t.string :name
