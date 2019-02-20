@@ -169,18 +169,18 @@ class CLI
       if input == 0000
         system("clear")
         main_menu()
-      elsif FaveAnimal.exists?(:animal_key => animals[input -1]["animal_id"]) == false
-        favorite = FaveAnimal.create(animal_key: animals[input -1]["animal_id"], name: animals[input - 1]["animal_name"], species: animals[input - 1]["animal_type"], breed: animals[input - 1]["animal_breed"], age: animals[input - 1]["age"], image: animals[input - 1]["image"], website: animals[input - 1]["link"], status: animals[input - 1]["record_type"])
-        @fave_animal_id = favorite.id
-        UserFave.create(user_id: @user_id, fave_animal_id: @fave_animal_id)
+      elsif FavoriteAnimal.exists?(:animal_key => animals[input -1]["animal_id"]) == false
+        favorite = FavoriteAnimal.create(animal_key: animals[input -1]["animal_id"], name: animals[input - 1]["animal_name"], species: animals[input - 1]["animal_type"], breed: animals[input - 1]["animal_breed"], age: animals[input - 1]["age"], image: animals[input - 1]["image"], website: animals[input - 1]["link"], status: animals[input - 1]["record_type"])
+        @favorite_animal_id = favorite.id
+        UserFavorite.create(user_id: @user_id, favorite_animal_id: @favorite_animal_id)
         system("clear")
         puts "Favorite successfully added!".green
         puts ""
         main_menu()
       else
-        found = FaveAnimal.find_by(:animal_key => animals[input -1]["animal_id"])
-        @fave_animal_id = found.id
-        UserFave.create(user_id: @user_id, fave_animal_id: @fave_animal_id)
+        found = FavoriteAnimal.find_by(:animal_key => animals[input -1]["animal_id"])
+        @favorite_animal_id = found.id
+        UserFavorite.create(user_id: @user_id, favorite_animal_id: @favorite_animal_id)
         system("clear")
         puts "Favorite successfully added!".green
         puts ""
@@ -189,7 +189,7 @@ class CLI
     end
 
     def my_favorites
-      UserFave.all.select do |favorite|
+      UserFavorite.all.select do |favorite|
         favorite.user_id == @user_id
       end
     end
@@ -197,8 +197,8 @@ class CLI
     def view_favorites
       fav_animals = []
       my_favorites.each do |favorite|
-        FaveAnimal.all.each do |animal|
-          if animal.id == favorite.fave_animal_id
+        FavoriteAnimal.all.each do |animal|
+          if animal.id == favorite.favorite_animal_id
             fav_animals << animal
           end
         end
@@ -234,8 +234,8 @@ class CLI
           puts ""
           puts "Which FAVORITE NUMBER would you like to remove?"
           input = gets.chomp.to_i
-          found = UserFave.find_by(:fave_animal_id => fav_animals[input - 1]["id"])
-          UserFave.delete(found["id"])
+          found = UserFavorite.find_by(:favorite_animal_id => fav_animals[input - 1]["id"])
+          UserFavorite.delete(found["id"])
           system("clear")
           puts "Successfully removed #{found["species"]} from your favorites!".green
           view_favorites()
